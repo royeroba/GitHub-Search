@@ -1,57 +1,58 @@
 <script setup lang="ts">
+import { ref, watch } from "vue";
 import { useRepositoryStore } from "@/stores/repositoryStore";
 import SearchInput from "@/components/SearchInput.vue";
 import RepositoryList from "@/components/RepositoryList.vue";
+import Hero from "@/components/Hero.vue";
+import ErrorModal from "@/components/ErrorModal.vue";
+import Spinner from "@/components/Spinner.vue";
 
-// Usa el store de Pinia
 const repositoryStore = useRepositoryStore();
+
+const isModalVisible = ref(false);
+
+watch(
+  () => repositoryStore.errorMessage,
+  (newValue) => {
+    if (newValue) {
+      isModalVisible.value = true;
+    }
+  }
+);
+
+const closeErrorModal = () => {
+  isModalVisible.value = false;
+  repositoryStore.errorMessage = "";
+};
 </script>
 
 <template>
-  <div class="p-6">
-    <h1 class="mb-4 text-2xl font-bold text-center text-gray-800">
-      GitHub Repository Search
-    </h1>
-
-    <!-- Componente de búsqueda -->
-    <SearchInput @search="repositoryStore.fetchRepositories" />
-
-    <!-- Indicador de carga -->
-    <div
-      v-if="repositoryStore.isLoading"
-      class="mt-4 text-center text-blue-500"
-    >
-      Loading...
+  <div>
+    <div class="relative">
+      <Hero />
+      <div class="absolute inset-0 flex items-center justify-center">
+        <SearchInput @search="repositoryStore.fetchRepositories" />
+      </div>
     </div>
 
-    <!-- Mensaje de error -->
-    <div
-      v-if="repositoryStore.errorMessage"
-      class="mt-4 text-center text-red-500"
-    >
-      {{ repositoryStore.errorMessage }}
+    <Spinner :visible="repositoryStore.isLoading" />
+
+    <div class="p-6">
+      <RepositoryList
+        v-if="
+          !repositoryStore.isLoading &&
+          !repositoryStore.errorMessage &&
+          repositoryStore.repositories.length
+        "
+        :repositories="repositoryStore.repositories"
+        class="mt-6"
+      />
     </div>
 
-    <!-- Lista de repositorios -->
-    <RepositoryList
-      v-if="
-        !repositoryStore.isLoading &&
-        !repositoryStore.errorMessage &&
-        repositoryStore.repositories.length
-      "
-      :repositories="repositoryStore.repositories"
+    <ErrorModal
+      :message="repositoryStore.errorMessage"
+      :visible="isModalVisible"
+      @close="closeErrorModal"
     />
-
-    <!-- Mensaje si no hay resultados -->
-    <div
-      v-else-if="
-        !repositoryStore.isLoading &&
-        !repositoryStore.errorMessage &&
-        repositoryStore.repositories.length === 0
-      "
-      class="mt-4 text-center text-gray-500"
-    >
-      No repositories found.
-    </div>
   </div>
 </template>

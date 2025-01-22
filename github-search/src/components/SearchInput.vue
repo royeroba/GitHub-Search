@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center w-full max-w-lg mx-auto">
     <input
-      v-model="searchQuery"
+      v-model="searchRepository"
       type="text"
       placeholder="Search repositories..."
       class="flex-1 px-6 py-3 text-gray-700 bg-white border border-gray-300 rounded-full shadow-sm focus:outline-none"
@@ -19,13 +19,13 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const searchQuery = ref("");
+const searchRepository = ref("");
 const emit = defineEmits(["search"]);
 
 const emitSearch = () => {
-  if (searchQuery.value.trim()) {
-    emit("search", searchQuery.value.trim()); // Emite el término de búsqueda
-    searchQuery.value = ""; // Limpia el campo de entrada
+  if (searchRepository.value.trim()) {
+    emit("search", searchRepository.value.trim());
+    searchRepository.value = "";
   }
 };
 </script>

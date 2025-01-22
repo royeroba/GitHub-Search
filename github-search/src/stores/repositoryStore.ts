@@ -24,11 +24,16 @@ export const useRepositoryStore = defineStore("repositoryStore", () => {
           page: 1,
         },
       });
+
+      if (response.data.items.length === 0) {
+        errorMessage.value = "No repositories found for your search.";
+        return;
+      }
+
       repositories.value = response.data.items;
-      console.log(repositories.value);
     } catch (error) {
       errorMessage.value =
-        "Hubo un problema al obtener los repositorios. Intenta nuevamente.";
+        "There was a problem getting the repositories. Try again.";
       console.error(error);
     } finally {
       isLoading.value = false;
