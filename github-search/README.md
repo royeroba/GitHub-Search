@@ -1,33 +1,73 @@
-# github-search
+# Proyecto: Buscador de Repositorios en GitHub
 
-This template should help get you started developing with Vue 3 in Vite.
+## Instrucciones para ejecutar el proyecto
 
-## Recommended IDE Setup
+### Instalación de dependencias
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+Ejecuta el siguiente comando para instalar todas las dependencias necesarias:
 
-## Type Support for `.vue` Imports in TS
+```bash
+cd github-search
+```
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
+```bash
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### Iniciar el servidor de desarrollo
 
-```sh
+Para iniciar el servidor de desarrollo, utiliza el siguiente comando:
+
+```bash
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
+---
 
-```sh
-npm run build
-```
+## Resumen del proyecto
+
+Este proyecto es una aplicación que permite buscar repositorios en GitHub utilizando la API oficial. Está construido con las siguientes tecnologías y herramientas:
+
+- **Vue 3** con **TypeScript**
+- **Pinia** para la gestión de estado global
+- **TailwindCSS** para estilos responsivos
+- **Axios** para realizar peticiones HTTP
+- **Vue Router** para la gestión de rutas
+
+### Funcionalidades implementadas:
+
+- Se creó el store de Pinia para manejar la lógica y el estado global de manera centralizada.
+- Componentes reutilizables y escalables, como:
+  - `InputSearch`: Para ingresar términos de búsqueda.
+  - `ErrorModal`: Para mostrar mensajes de error.
+  - `Hero`: Para la cabecera principal de la aplicación.
+  - `RepositoryList`: Para listar los repositorios obtenidos de la API.
+  - `SearchHistory`: Para mostrar y gestionar el historial de búsquedas.
+  - `Spinner`: Para indicar estados de carga.
+- Los componentes se comunican entre sí mediante props y eventos emit (`emit`).
+- Vista principal `HomeView` que renderiza todos los componentes mencionados.
+- Configuración de una `baseURL` de Axios para gestionar las peticiones HTTP.
+- Archivo de tipos (`types.ts`) para centralizar y gestionar el tipado de TypeScript.
+
+---
+
+## Decisiones técnicas importantes
+
+- Se utilizó **TailwindCSS** para diseñar una interfaz responsiva siguiendo el enfoque _mobile-first_.
+- La lógica de la aplicación se dividió cuidadosamente entre los componentes y el store de Pinia, asegurando un código limpio y escalable.
+- El historial de búsquedas se almacena de manera persistente en `localStorage`.
+
+---
+
+## Limitaciones conocidas y áreas de mejora
+
+- **Paginación**: Hubo dificultades en la implementación debido a la gran cantidad de resultados devueltos por la API. Aunque logré visualizar correctamente el número total de páginas, no logré completar la funcionalidad de cambio de página dentro del tiempo establecido para la prueba.
+- **Tiempo de desarrollo**: Excedí un poco el tiempo estimado tratando de resolver el problema de la paginación, lo que afectó el enfoque en otras posibles mejoras.
+
+---
+
+## Mejoras futuras
+
+- Finalizar la implementación de la paginación para que funcione correctamente.
+- Mejorar la gestión de errores para abarcar más casos posibles.
+- Optimizar el rendimiento al manejar grandes cantidades de resultados en las peticiones de la API.
