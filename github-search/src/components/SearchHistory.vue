@@ -1,13 +1,3 @@
-<script setup lang="ts">
-import { useRepositoryStore } from "@/stores/repositoryStore";
-
-const repositoryStore = useRepositoryStore();
-
-const searchFromHistory = (query: string) => {
-  repositoryStore.fetchRepositories(query);
-};
-</script>
-
 <template>
   <div>
     <h3 class="mb-4 text-lg font-semibold text-gray-700">Search History</h3>
@@ -25,3 +15,13 @@ const searchFromHistory = (query: string) => {
     </ul>
   </div>
 </template>
+
+<script setup lang="ts">
+import { useRepositoryStore } from "@/stores/repositoryStore";
+
+const repositoryStore = useRepositoryStore();
+
+const searchFromHistory = (query: string) => {
+  repositoryStore.fetchRepositories(query);
+};
+</script>

@@ -1,35 +1,3 @@
-<script setup lang="ts">
-import { ref, watch } from "vue";
-import { useRepositoryStore } from "@/stores/repositoryStore";
-import SearchInput from "@/components/SearchInput.vue";
-import RepositoryList from "@/components/RepositoryList.vue";
-import Hero from "@/components/Hero.vue";
-import ErrorModal from "@/components/ErrorModal.vue";
-import Spinner from "@/components/Spinner.vue";
-import SearchHistory from "@/components/SearchHistory.vue";
-
-const repositoryStore = useRepositoryStore();
-
-const isModalVisible = ref(false);
-
-watch(
-  () => repositoryStore.errorMessage,
-  (newValue) => {
-    if (newValue) {
-      isModalVisible.value = true;
-    }
-  }
-);
-
-const closeErrorModal = () => {
-  isModalVisible.value = false;
-  repositoryStore.errorMessage = "";
-};
-
-const hasResults = () =>
-  repositoryStore.repositories.length > 0 && !repositoryStore.errorMessage;
-</script>
-
 <template>
   <div>
     <div class="relative">
@@ -74,3 +42,35 @@ const hasResults = () =>
     />
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref, watch } from "vue";
+import { useRepositoryStore } from "@/stores/repositoryStore";
+import SearchInput from "@/components/SearchInput.vue";
+import RepositoryList from "@/components/RepositoryList.vue";
+import Hero from "@/components/Hero.vue";
+import ErrorModal from "@/components/ErrorModal.vue";
+import Spinner from "@/components/Spinner.vue";
+import SearchHistory from "@/components/SearchHistory.vue";
+
+const repositoryStore = useRepositoryStore();
+
+const isModalVisible = ref(false);
+
+watch(
+  () => repositoryStore.errorMessage,
+  (newValue) => {
+    if (newValue) {
+      isModalVisible.value = true;
+    }
+  }
+);
+
+const closeErrorModal = () => {
+  isModalVisible.value = false;
+  repositoryStore.errorMessage = "";
+};
+
+const hasResults = () =>
+  repositoryStore.repositories.length > 0 && !repositoryStore.errorMessage;
+</script>
